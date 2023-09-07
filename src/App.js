@@ -121,7 +121,6 @@ function App() {
           No data found
         </Typography>
         :
-<<<<<<< HEAD
         results.map((result, idx) => (
           activeCard === idx ? <div style={{ margin: "0 auto", textAlign: "center" }}>
             <Typography sx={{ fontSize: 24, mx: "auto", textAlign: "center", marginTop: 5, marginBottom: 3 }} gutterBottom>
@@ -132,31 +131,6 @@ function App() {
                 <NavigateBeforeIcon /></Button>
               <Card className='indi-card' sx={{ backgroundColor: "whitesmoke", textAlign: "center", borderRadius: "25px", boxShadow: "1px 2px 2px 2px grey", flexGrow: 1 }} key={idx}>
                 <CardContent>
-=======
-        // <div style={{ width: 500, margin: "1rem auto", textAlign: "center", boxShadow: "1px 2px 2px grey" }}>
-        <Carousel
-          autoPlay={false}
-          animation="slide"
-          navButtonsAlwaysVisible={true}
-          navButtonsProps={{
-            style: {
-              backgroundColor: '#1976d2',
-              color: 'white',
-              borderRadius: 3,
-              width: 30,
-              marginTop: -15,
-              fontSize: 30
-             
-            }
-          }
-          }
-          indicators={false}
-          //height={"fit-content"}
-          sx={{ overflow:"auto",minWidth: 275, maxWidth: 500, mx: "auto", textAlign: "center", marginTop: 5 }}
-        >{results.map((result, idx) => (
-          <Card sx={{ p: 1, height: "fit-content", backgroundColor: "#dedede", borderRadius: "25px", boxShadow: "1px 2px 2px 2px grey" }} key={idx}>
-            <CardContent>
->>>>>>> 4a51d2d5fc0c534605d52ec6fe826a332909571d
 
                   <Typography sx={{ fontSize: 14 }} gutterBottom>
                     Method: {result['http_method']} Request
