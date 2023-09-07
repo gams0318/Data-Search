@@ -129,14 +129,14 @@ function App() {
               borderRadius: 3,
               width: 30,
               marginTop: -15,
-              fontSize: 30,
-              overflow: "auto"
+              fontSize: 30
+             
             }
           }
           }
           indicators={false}
           //height={"fit-content"}
-          sx={{ minWidth: 275, maxWidth: 500, mx: "auto", textAlign: "center", marginTop: 5 }}
+          sx={{ overflow:"auto",minWidth: 275, maxWidth: 500, mx: "auto", textAlign: "center", marginTop: 5 }}
         >{results.map((result, idx) => (
           <Card sx={{ p: 1, height: "fit-content", backgroundColor: "#dedede", borderRadius: "25px", boxShadow: "1px 2px 2px 2px grey" }} key={idx}>
             <CardContent>
