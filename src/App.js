@@ -4,7 +4,9 @@ import { Container, FormControlLabel, Typography, FormControl, InputLabel, Selec
 import { useState } from 'react';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
-import Carousel from 'react-material-ui-carousel'
+import NavigateBeforeIcon from '@mui/icons-material/NavigateBefore';
+import NavigateNextIcon from '@mui/icons-material/NavigateNext';
+import './App.css'
 
 function App() {
   const [httpMethod, setHttpMethod] = useState("any");
@@ -13,6 +15,7 @@ function App() {
   const [responseTime, setResponseTime] = useState(true);
   const [ipAddress, setIpAddress] = useState(true);
   const [results, setResults] = useState(data);
+  const [activeCard, setActiveCard] = useState(0);
 
   const handleSearch = () => {
     const filteredData = data.filter((result) => {
@@ -22,7 +25,7 @@ function App() {
       );
     });
     setResults(filteredData);
-
+    setActiveCard(0);
   };
   return (
     <div>
@@ -64,6 +67,16 @@ function App() {
               <MenuItem value="eu-west-1">eu-west-1</MenuItem>
             </Select>
           </FormControl>
+
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={handleSearch}
+            fullWidth
+            sx={{ mb: 2 }}
+          >
+            Search
+          </Button>
           <Typography variant="h7" gutterBottom style={{ display: 'block' }}>
             Please check the details you wish to avail
           </Typography>
@@ -99,15 +112,6 @@ function App() {
               sx={{ mb: 2 }}
             />
           </div>
-          <Button
-            variant="contained"
-            color="primary"
-            onClick={handleSearch}
-            fullWidth
-            sx={{ mb: 2 }}
-          >
-            Search
-          </Button>
         </Paper>
 
 
@@ -117,57 +121,50 @@ function App() {
           No data found
         </Typography>
         :
-        // <div style={{ width: 500, margin: "1rem auto", textAlign: "center", boxShadow: "1px 2px 2px grey" }}>
-        <Carousel
-          autoPlay={false}
-          animation="slide"
-          navButtonsAlwaysVisible={true}
-          navButtonsProps={{
-            style: {
-              backgroundColor: '#1976d2',
-              color: 'white',
-              borderRadius: 3,
-              width: 30,
-              marginTop: -15,
-              fontSize: 30,
-              overflow: "auto"
-            }
-          }
-          }
-          indicators={false}
-          //height={"fit-content"}
-          sx={{ minWidth: 275, maxWidth: 500, mx: "auto", textAlign: "center", marginTop: 5 }}
-        >{results.map((result, idx) => (
-          <Card sx={{ p: 1, height: "fit-content", backgroundColor: "#dedede", borderRadius: "25px", boxShadow: "1px 2px 2px 2px grey" }} key={idx}>
-            <CardContent>
+        results.map((result, idx) => (
+          activeCard === idx ? <div style={{ margin: "0 auto", textAlign: "center" }}>
+            <Typography sx={{ fontSize: 24, mx: "auto", textAlign: "center", marginTop: 5, marginBottom: 3 }} gutterBottom>
+              Showing {idx + 1} of {results.length} results
+            </Typography>
+            <div style={{ display: "flex", margin: " auto", justifyContent: "center", alignItems: "center", textAlign: "center" }} className='cards-holder'>
+              <Button variant="contained" color="primary" onClick={() => setActiveCard(idx === 0 ? results.length - 1 : idx - 1)} sx={{ height: "2.5rem" }}>
+                <NavigateBeforeIcon /></Button>
+              <Card className='indi-card' sx={{ backgroundColor: "whitesmoke", textAlign: "center", borderRadius: "25px", boxShadow: "1px 2px 2px 2px grey", flexGrow: 1 }} key={idx}>
+                <CardContent>
 
-              <Typography sx={{ fontSize: 14 }} gutterBottom>
-                Method: {result['http_method']} Request
-              </Typography>
+                  <Typography sx={{ fontSize: 14 }} gutterBottom>
+                    Method: {result['http_method']} Request
+                  </Typography>
 
-              <Typography variant="h5" component="div">
-                AWS Region: {result['aws_region']}
-              </Typography>
+                  <Typography variant="h5" component="div" className='region-name'>
+                    AWS Region: {result['aws_region']}
+                  </Typography>
 
-              {status ?
-                <Typography sx={{ mb: 1.5 }} color="text.secondary">
-                  Status code: {result['http_status_code']}
-                </Typography> : null}
+                  {status ?
+                    <Typography sx={{ mb: 1.5 }} color="text.secondary">
+                      Status code: {result['http_status_code']}
+                    </Typography> : null}
 
-              {ipAddress ?
-                <Typography variant="body2">
-                  IP Address: {result['ip_address']}
-                </Typography> : null}
+                  {ipAddress ?
+                    <Typography variant="body2">
+                      IP Address: {result['ip_address']}
+                    </Typography> : null}
 
-              {responseTime ?
-                <Typography variant="body2">
-                  Response Time: {result['response_time']} ms
-                </Typography> : null}
+                  {responseTime ?
+                    <Typography variant="body2">
+                      Response Time: {result['response_time']} ms
+                    </Typography> : null}
 
-            </CardContent>
-          </Card>
-        ))}
-        </Carousel>}
+                </CardContent>
+              </Card>
+              <Button
+                variant="contained" color="primary" onClick={() => setActiveCard(idx === results.length - 1 ? 0 : idx + 1)} sx={{ height: "2.5rem" }}>
+                <NavigateNextIcon />
+              </Button>
+            </div>
+          </div> : null
+        ))
+      }
     </div >
   )
 }
